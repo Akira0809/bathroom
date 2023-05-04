@@ -1,0 +1,11 @@
+{% extends "account/base.html" %}
+
+{% block title %}トップ{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-5">浴室予約システム</h1>
+    <a href="{% url 'account:login' %}" class="btn btn-outline-primary">ログイン</a>
+    <a href="{% url 'account:create_account' %}" class="btn btn-outline-primary">新規登録</a>
+</div>
+{% endblock %}

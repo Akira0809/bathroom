@@ -1,0 +1,134 @@
+{% extends "account/base.html" %}
+{% block title %}ホーム{% endblock %}
+
+{% block content %}
+<form action="{% url 'account:data_view' %}" method="post">
+  {% csrf_token %}
+  <div class="container">
+    <h1 class="my-5"></h1>
+    <p>{{ user.username }}さん、こんにちは。</p>
+    <table border="1">
+        <tr>
+          <th>時間</th>
+          <th>5:00~5:25</th>
+          <th>5:30~5:55</th>
+          <th>6:00~6:25</th>
+          <th>6:30~6:55</th>
+          <th>7:00~7:25</th>
+          <th>7:30~7:55</th>
+          <th>8:00~8:25</th>
+          <th>8:30~8:55</th>
+          <th>9:00~9:25</th>
+          <th>9:30~9:55</th>
+          <th>10:00~10:25</th>
+          <th>10:30~10:55</th>
+        </tr>
+        <tr>
+          <td>大風呂</td>
+          <td>
+            <label>{{ b0 }}/10</label>
+            <input type="radio" name="my_radio" value="b0" {% if radio_selection == "b0" %}checked{% endif %}>
+          </td>
+          <td>
+            <label>{{ b1 }}/10</label>
+            <input type="radio" name="my_radio" value="b1">
+          </td>
+          <td>
+            <label>{{ b2 }}/10</label>
+            <input type="radio" name="my_radio" value="b2">
+          </td>
+          <td>
+            <label>{{ b3 }}/10</label>
+            <input type="radio" name="my_radio" value="b3">
+          </td>
+          <td>
+            <label>{{ b4 }}/10</label>
+            <input type="radio" name="my_radio" value="b4">
+          </td>
+          <td>
+            <label>{{ b5 }}/10</label>
+            <input type="radio" name="my_radio" value="b5">
+          </td>
+          <td>
+            <label>{{ b6 }}/10</label>
+            <input type="radio" name="my_radio" value="b6">
+          </td>
+          <td>
+            <label>{{ b7 }}/10</label>
+            <input type="radio" name="my_radio" value="b7">
+          </td>
+          <td>
+            <label>{{ b8 }}/10</label>
+            <input type="radio" name="my_radio" value="b8">
+          </td>
+          <td>
+            <label>{{ b9 }}/10</label>
+            <input type="radio" name="my_radio" value="b9">
+          </td>
+          <td>
+            <label>{{ b10 }}/10</label>
+            <input type="radio" name="my_radio" value="b10">
+          </td>
+          <td>
+            <label>{{ b11 }}/10</label>
+            <input type="radio" name="my_radio" value="b11">
+          </td>
+        </tr>
+        <tr>
+          <td>小風呂</td>
+          <td>
+            <label>{{ s0 }}/4</label>
+            <input type="radio" name="my_radio" value="s0">
+          </td>
+          <td>
+            <label>{{ s1 }}/4</label>
+            <input type="radio" name="my_radio" value="s1">
+          </td>
+          <td>
+            <label>{{ s2 }}/4</label>
+            <input type="radio" name="my_radio" value="s2">
+          </td>
+          <td>
+            <label>{{ s3 }}/4</label>
+            <input type="radio" name="my_radio" value="s3">
+          </td>
+          <td>
+            <label>{{ s4 }}/4</label>
+            <input type="radio" name="my_radio" value="s4">
+          </td>
+          <td>
+            <label>{{ s5 }}/4</label>
+            <input type="radio" name="my_radio" value="s5">
+          </td>
+          <td>
+            <label>{{ s6 }}/4</label>
+            <input type="radio" name="my_radio" value="s6">
+          </td>
+          <td>
+            <label>{{ s7 }}/4</label>
+            <input type="radio" name="my_radio" value="s7">
+          </td>
+          <td>
+            <label>{{ s8 }}/4</label>
+            <input type="radio" name="my_radio" value="s8">
+          </td>
+          <td>
+            <label>{{ s9 }}/4</label>
+            <input type="radio" name="my_radio" value="s9">
+          </td>
+          <td>
+            <label>{{ s10 }}/4</label>
+            <input type="radio" name="my_radio" value="s10">
+          </td>
+          <td>
+            <label>{{ s11 }}/4</label>
+            <input type="radio" name="my_radio" value="s11">
+          </td>
+        </tr>
+      </table>
+      <br>
+    <input type="submit" class="btn btn-outline-primary" value="送信">
+    <a href="{% url 'account:logout' %}" class="btn btn-outline-primary">ログアウト</a>
+  </div>
+</form>
+{% endblock %}
