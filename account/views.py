@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, CreateView
 from django.shortcuts import render, redirect
 from . forms import UserCreateForm
 from . import forms
-from account.models import Data
+from account.models import Data, User
 
 class TopView(TemplateView):
     template_name = "account/top.html"
@@ -19,10 +19,11 @@ class HomeView(LoginRequiredMixin, TemplateView):
         data = Data.objects.first()
         b = list(data.big)
         s = list(data.small)
-        previous_selection = s[0]
+        user = User.objects.get(user=request.user)
+        user_choise = user.button
         context = {
+            'radio_selection': user_choise,
             'b0': b[0],
-            'radio_selection': previous_selection,
             'b1': b[1],
             'b2': b[2],
             'b3': b[3],
@@ -72,17 +73,24 @@ class Create_account(CreateView):
         form = UserCreateForm(request.POST)
         return render(request, 'account/create.html', {'form': form,})
 
+
 def data_view(request):
     if request.method == 'POST':
         myradio = request.POST.get("my_radio")
         data = Data.objects.first()
+        user = User.objects.get(user=request.user)
+        user.button = myradio
+        user.save()
         big = list(data.big)
         small = list(data.small)
         if (myradio == None):
             data = Data.objects.first()
+            user = User.objects.get(user=request.user)
+            user_choise = user.button
             b = list(data.big)
             s = list(data.small)
             return render(request, 'account/home.html', {
+                'radio_selection': user_choise,
                 'b0': b[0],
                 'b1': b[1],
                 'b2': b[2],
@@ -113,15 +121,15 @@ def data_view(request):
         else:
             small[int(myradio[1:])]+=1
         data = Data.objects.first()
-        data.big = big
-        data.small = small
+        data.big = list(big)
+        data.small = list(small)
         data.save()
         b = list(data.big)
         s = list(data.small)
-        previous_selection = request.session.get('radio')
+        user_choise = user.button
 
     return render(request, 'account/home.html', {
-        'radio_selection': previous_selection,
+        'radio_selection': user_choise,
         'b0': b[0],
         'b1': b[1],
         'b2': b[2],
