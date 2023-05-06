@@ -19,10 +19,40 @@ class HomeView(LoginRequiredMixin, TemplateView):
         data = Data.objects.first()
         b = list(data.big)
         s = list(data.small)
-        user = User.objects.get(user=request.user)
+        bm = list(data.big_maximum)
+        sm = list(data.small_maximum)
+        try:
+            user = User.objects.get(user=request.user)
+        except:
+            user = User(user=request.user, button="a")
+            user.save()
         user_choise = user.button
         context = {
             'radio_selection': user_choise,
+            'bm0': bm[0],
+            'bm1': bm[1],
+            'bm2': bm[2],
+            'bm3': bm[3],
+            'bm4': bm[4],
+            'bm5': bm[5],
+            'bm6': bm[6],
+            'bm7': bm[7],
+            'bm8': bm[8],
+            'bm9': bm[9],
+            'bm10': bm[10],
+            'bm11': bm[11],
+            'sm0': sm[0],
+            'sm1': sm[1],
+            'sm2': sm[2],
+            'sm3': sm[3],
+            'sm4': sm[4],
+            'sm5': sm[5],
+            'sm6': sm[6],
+            'sm7': sm[7],
+            'sm8': sm[8],
+            'sm9': sm[9],
+            'sm10': sm[10],
+            'sm11': sm[11],
             'b0': b[0],
             'b1': b[1],
             'b2': b[2],
@@ -79,10 +109,20 @@ def data_view(request):
         myradio = request.POST.get("my_radio")
         data = Data.objects.first()
         user = User.objects.get(user=request.user)
+        rebutton = user.button
         user.button = myradio
         user.save()
         big = list(data.big)
         small = list(data.small)
+        big_maximum = list(data.big_maximum)
+        small_maximum = list(data.small_maximum)
+        if rebutton != "a":
+            if rebutton[0] == "b":
+                big[int(rebutton[1:])]-=1
+                big_maximum[int(rebutton[1:])] = False
+            else:
+                small[int(rebutton[1:])]-=1
+                small_maximum[int(rebutton[1:])] = False
         if (myradio == None):
             data = Data.objects.first()
             user = User.objects.get(user=request.user)
@@ -91,6 +131,30 @@ def data_view(request):
             s = list(data.small)
             return render(request, 'account/home.html', {
                 'radio_selection': user_choise,
+                'bm0': bm[0],
+                'bm1': bm[1],
+                'bm2': bm[2],
+                'bm3': bm[3],
+                'bm4': bm[4],
+                'bm5': bm[5],
+                'bm6': bm[6],
+                'bm7': bm[7],
+                'bm8': bm[8],
+                'bm9': bm[9],
+                'bm10': bm[10],
+                'bm11': bm[11],
+                'sm0': sm[0],
+                'sm1': sm[1],
+                'sm2': sm[2],
+                'sm3': sm[3],
+                'sm4': sm[4],
+                'sm5': sm[5],
+                'sm6': sm[6],
+                'sm7': sm[7],
+                'sm8': sm[8],
+                'sm9': sm[9],
+                'sm10': sm[10],
+                'sm11': sm[11],
                 'b0': b[0],
                 'b1': b[1],
                 'b2': b[2],
@@ -117,19 +181,53 @@ def data_view(request):
                 's11': s[11]
             })
         if (myradio[0] == 'b'):
-            big[int(myradio[1:])]+=1
-        else:
-            small[int(myradio[1:])]+=1
+            if big[int(myradio[1:])] <= 9:
+                big[int(myradio[1:])]+=1
+                if big[int(myradio[1:])] == 10:
+                    big_maximum[int(myradio[1:])] = True
+        elif (myradio[0] == 's'):
+            if small[int(myradio[1:])] <= 3:
+                small[int(myradio[1:])]+=1
+                if small[int(myradio[1:])] == 4:
+                    small_maximum[int(myradio[1:])] = True
         data = Data.objects.first()
         data.big = list(big)
         data.small = list(small)
+        data.big_maximum = list(big_maximum)
+        data.small_maximum = list(small_maximum)
         data.save()
         b = list(data.big)
         s = list(data.small)
+        bm = list(data.big_maximum)
+        sm = list(data.small_maximum)
         user_choise = user.button
 
     return render(request, 'account/home.html', {
         'radio_selection': user_choise,
+        'bm0': bm[0],
+        'bm1': bm[1],
+        'bm2': bm[2],
+        'bm3': bm[3],
+        'bm4': bm[4],
+        'bm5': bm[5],
+        'bm6': bm[6],
+        'bm7': bm[7],
+        'bm8': bm[8],
+        'bm9': bm[9],
+        'bm10': bm[10],
+        'bm11': bm[11],
+        'sm0': sm[0],
+        'sm1': sm[1],
+        'sm2': sm[2],
+        'sm3': sm[3],
+        'sm4': sm[4],
+        'sm5': sm[5],
+        'sm6': sm[6],
+        'sm7': sm[7],
+        'sm8': sm[8],
+        'sm9': sm[9],
+        'sm10': sm[10],
+        'sm11': sm[11],
         'b0': b[0],
         'b1': b[1],
         'b2': b[2],
