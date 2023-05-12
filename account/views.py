@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from . forms import UserCreateForm
 from . import forms
 from account.models import Data, User
+from django_user_agents.utils import get_user_agent
 
 class TopView(TemplateView):
     template_name = "account/top.html"
@@ -13,9 +14,8 @@ class TopView(TemplateView):
         return self.render_to_response({})
 
 class HomeView(LoginRequiredMixin, TemplateView):
-    template_name = "account/home.html"
-
     def get(self, request, *args, **kwargs):
+        user_agent = get_user_agent(request)
         data = Data.objects.first()
         b = list(data.big)
         s = list(data.small)
@@ -78,7 +78,11 @@ class HomeView(LoginRequiredMixin, TemplateView):
             's10': s[10],
             's11': s[11]
         }
-        return self.render_to_response(context)
+
+        if user_agent.is_mobile:
+            return render(request, "account/home_mobile.html", context)
+        else:
+            return render(request, "account/home.html", context)
 
 class LoginView(LoginView):
     form_class = forms.LoginForm
@@ -107,6 +111,7 @@ class Create_account(CreateView):
 def data_view(request):
     if request.method == 'POST':
         myradio = request.POST.get("my_radio")
+        user_agent = get_user_agent(request)
         data = Data.objects.first()
         user = User.objects.get(user=request.user)
         rebutton = user.button
@@ -129,57 +134,110 @@ def data_view(request):
             user_choise = user.button
             b = list(data.big)
             s = list(data.small)
-            return render(request, 'account/home.html', {
-                'radio_selection': user_choise,
-                'bm0': bm[0],
-                'bm1': bm[1],
-                'bm2': bm[2],
-                'bm3': bm[3],
-                'bm4': bm[4],
-                'bm5': bm[5],
-                'bm6': bm[6],
-                'bm7': bm[7],
-                'bm8': bm[8],
-                'bm9': bm[9],
-                'bm10': bm[10],
-                'bm11': bm[11],
-                'sm0': sm[0],
-                'sm1': sm[1],
-                'sm2': sm[2],
-                'sm3': sm[3],
-                'sm4': sm[4],
-                'sm5': sm[5],
-                'sm6': sm[6],
-                'sm7': sm[7],
-                'sm8': sm[8],
-                'sm9': sm[9],
-                'sm10': sm[10],
-                'sm11': sm[11],
-                'b0': b[0],
-                'b1': b[1],
-                'b2': b[2],
-                'b3': b[3],
-                'b4': b[4],
-                'b5': b[5],
-                'b6': b[6],
-                'b7': b[7],
-                'b8': b[8],
-                'b9': b[9],
-                'b10': b[10],
-                'b11': b[11],
-                's0': s[0],
-                's1': s[1],
-                's2': s[2],
-                's3': s[3],
-                's4': s[4],
-                's5': s[5],
-                's6': s[6],
-                's7': s[7],
-                's8': s[8],
-                's9': s[9],
-                's10': s[10],
-                's11': s[11]
-            })
+            if user_agent.is_mobile:
+                return render(request, "account/home_mobile.html", {
+                    'radio_selection': user_choise,
+                    'bm0': bm[0],
+                    'bm1': bm[1],
+                    'bm2': bm[2],
+                    'bm3': bm[3],
+                    'bm4': bm[4],
+                    'bm5': bm[5],
+                    'bm6': bm[6],
+                    'bm7': bm[7],
+                    'bm8': bm[8],
+                    'bm9': bm[9],
+                    'bm10': bm[10],
+                    'bm11': bm[11],
+                    'sm0': sm[0],
+                    'sm1': sm[1],
+                    'sm2': sm[2],
+                    'sm3': sm[3],
+                    'sm4': sm[4],
+                    'sm5': sm[5],
+                    'sm6': sm[6],
+                    'sm7': sm[7],
+                    'sm8': sm[8],
+                    'sm9': sm[9],
+                    'sm10': sm[10],
+                    'sm11': sm[11],
+                    'b0': b[0],
+                    'b1': b[1],
+                    'b2': b[2],
+                    'b3': b[3],
+                    'b4': b[4],
+                    'b5': b[5],
+                    'b6': b[6],
+                    'b7': b[7],
+                    'b8': b[8],
+                    'b9': b[9],
+                    'b10': b[10],
+                    'b11': b[11],
+                    's0': s[0],
+                    's1': s[1],
+                    's2': s[2],
+                    's3': s[3],
+                    's4': s[4],
+                    's5': s[5],
+                    's6': s[6],
+                    's7': s[7],
+                    's8': s[8],
+                    's9': s[9],
+                    's10': s[10],
+                    's11': s[11]
+                }) 
+            else:
+                return render(request, 'account/home.html', {
+                    'radio_selection': user_choise,
+                    'bm0': bm[0],
+                    'bm1': bm[1],
+                    'bm2': bm[2],
+                    'bm3': bm[3],
+                    'bm4': bm[4],
+                    'bm5': bm[5],
+                    'bm6': bm[6],
+                    'bm7': bm[7],
+                    'bm8': bm[8],
+                    'bm9': bm[9],
+                    'bm10': bm[10],
+                    'bm11': bm[11],
+                    'sm0': sm[0],
+                    'sm1': sm[1],
+                    'sm2': sm[2],
+                    'sm3': sm[3],
+                    'sm4': sm[4],
+                    'sm5': sm[5],
+                    'sm6': sm[6],
+                    'sm7': sm[7],
+                    'sm8': sm[8],
+                    'sm9': sm[9],
+                    'sm10': sm[10],
+                    'sm11': sm[11],
+                    'b0': b[0],
+                    'b1': b[1],
+                    'b2': b[2],
+                    'b3': b[3],
+                    'b4': b[4],
+                    'b5': b[5],
+                    'b6': b[6],
+                    'b7': b[7],
+                    'b8': b[8],
+                    'b9': b[9],
+                    'b10': b[10],
+                    'b11': b[11],
+                    's0': s[0],
+                    's1': s[1],
+                    's2': s[2],
+                    's3': s[3],
+                    's4': s[4],
+                    's5': s[5],
+                    's6': s[6],
+                    's7': s[7],
+                    's8': s[8],
+                    's9': s[9],
+                    's10': s[10],
+                    's11': s[11]
+                })
         if (myradio[0] == 'b'):
             if big[int(myradio[1:])] <= 9:
                 big[int(myradio[1:])]+=1
@@ -201,55 +259,107 @@ def data_view(request):
         bm = list(data.big_maximum)
         sm = list(data.small_maximum)
         user_choise = user.button
-
-    return render(request, 'account/home.html', {
-        'radio_selection': user_choise,
-        'bm0': bm[0],
-        'bm1': bm[1],
-        'bm2': bm[2],
-        'bm3': bm[3],
-        'bm4': bm[4],
-        'bm5': bm[5],
-        'bm6': bm[6],
-        'bm7': bm[7],
-        'bm8': bm[8],
-        'bm9': bm[9],
-        'bm10': bm[10],
-        'bm11': bm[11],
-        'sm0': sm[0],
-        'sm1': sm[1],
-        'sm2': sm[2],
-        'sm3': sm[3],
-        'sm4': sm[4],
-        'sm5': sm[5],
-        'sm6': sm[6],
-        'sm7': sm[7],
-        'sm8': sm[8],
-        'sm9': sm[9],
-        'sm10': sm[10],
-        'sm11': sm[11],
-        'b0': b[0],
-        'b1': b[1],
-        'b2': b[2],
-        'b3': b[3],
-        'b4': b[4],
-        'b5': b[5],
-        'b6': b[6],
-        'b7': b[7],
-        'b8': b[8],
-        'b9': b[9],
-        'b10': b[10],
-        'b11': b[11],
-        's0': s[0],
-        's1': s[1],
-        's2': s[2],
-        's3': s[3],
-        's4': s[4],
-        's5': s[5],
-        's6': s[6],
-        's7': s[7],
-        's8': s[8],
-        's9': s[9],
-        's10': s[10],
-        's11': s[11]
-    })
+    if user_agent.is_mobile:
+        return render(request, "account/home_mobile.html", {
+            'radio_selection': user_choise,
+                    'bm0': bm[0],
+                    'bm1': bm[1],
+                    'bm2': bm[2],
+                    'bm3': bm[3],
+                    'bm4': bm[4],
+                    'bm5': bm[5],
+                    'bm6': bm[6],
+                    'bm7': bm[7],
+                    'bm8': bm[8],
+                    'bm9': bm[9],
+                    'bm10': bm[10],
+                    'bm11': bm[11],
+                    'sm0': sm[0],
+                    'sm1': sm[1],
+                    'sm2': sm[2],
+                    'sm3': sm[3],
+                    'sm4': sm[4],
+                    'sm5': sm[5],
+                    'sm6': sm[6],
+                    'sm7': sm[7],
+                    'sm8': sm[8],
+                    'sm9': sm[9],
+                    'sm10': sm[10],
+                    'sm11': sm[11],
+                    'b0': b[0],
+                    'b1': b[1],
+                    'b2': b[2],
+                    'b3': b[3],
+                    'b4': b[4],
+                    'b5': b[5],
+                    'b6': b[6],
+                    'b7': b[7],
+                    'b8': b[8],
+                    'b9': b[9],
+                    'b10': b[10],
+                    'b11': b[11],
+                    's0': s[0],
+                    's1': s[1],
+                    's2': s[2],
+                    's3': s[3],
+                    's4': s[4],
+                    's5': s[5],
+                    's6': s[6],
+                    's7': s[7],
+                    's8': s[8],
+                    's9': s[9],
+                    's10': s[10],
+                    's11': s[11]
+        })
+    else:
+        return render(request, 'account/home.html', {
+            'radio_selection': user_choise,
+            'bm0': bm[0],
+            'bm1': bm[1],
+            'bm2': bm[2],
+            'bm3': bm[3],
+            'bm4': bm[4],
+            'bm5': bm[5],
+            'bm6': bm[6],
+            'bm7': bm[7],
+            'bm8': bm[8],
+            'bm9': bm[9],
+            'bm10': bm[10],
+            'bm11': bm[11],
+            'sm0': sm[0],
+            'sm1': sm[1],
+            'sm2': sm[2],
+            'sm3': sm[3],
+            'sm4': sm[4],
+            'sm5': sm[5],
+            'sm6': sm[6],
+            'sm7': sm[7],
+            'sm8': sm[8],
+            'sm9': sm[9],
+            'sm10': sm[10],
+            'sm11': sm[11],
+            'b0': b[0],
+            'b1': b[1],
+            'b2': b[2],
+            'b3': b[3],
+            'b4': b[4],
+            'b5': b[5],
+            'b6': b[6],
+            'b7': b[7],
+            'b8': b[8],
+            'b9': b[9],
+            'b10': b[10],
+            'b11': b[11],
+            's0': s[0],
+            's1': s[1],
+            's2': s[2],
+            's3': s[3],
+            's4': s[4],
+            's5': s[5],
+            's6': s[6],
+            's7': s[7],
+            's8': s[8],
+            's9': s[9],
+            's10': s[10],
+            's11': s[11]
+        })

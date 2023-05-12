@@ -1,0 +1,154 @@
+{% extends "account/base.html" %}
+{% block title %}ホーム{% endblock %}
+
+{% block content %}
+<form action="{% url 'account:data_view' %}" method="post">
+    {% csrf_token %}
+    <div class="container">
+    <h1 class="my-5"></h1>
+    <p>{{ user.username }}さん、こんにちは。</p>
+    <table border="1">
+        <tr>
+          <th style="text-align: center;">時間</th>
+          <th style="text-align: center;">大風呂</th>
+          <th style="text-align: center;">小風呂</th>
+        </tr>
+        <tr>
+          <th style="text-align: center;">5:00~5:25</th>
+          <td width="80">
+              <label>{{ b0 }}/10</label>
+              <input type="radio" name="my_radio" value="b0" {% if bm0 %}disabled{% endif %} {% if radio_selection == 'b0' %}checked{% endif %}>
+          </td>
+          <td>
+            <label>{{ s0 }}/4</label>
+            <input type="radio" name="my_radio" value="s0" {% if sm0 %}disabled{% endif %} {% if radio_selection == 's0' %}checked{% endif %}>
+          </td>
+        </tr> 
+        <tr>
+            <th style="text-align: center;">5:30~5:55</th>
+            <td>
+              <label>{{ b1 }}/10</label>
+              <input type="radio" name="my_radio" value="b1" {% if bm1 %}disabled{% endif %} {% if radio_selection == 'b1' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s1 }}/4</label>
+              <input type="radio" name="my_radio" value="s1" {% if sm1 %}disabled{% endif %} {% if radio_selection == 's1' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">6:00~6:25</th>
+            <td>
+              <label>{{ b2 }}/10</label>
+              <input type="radio" name="my_radio" value="b2" {% if bm2 %}disabled{% endif %} {% if radio_selection == 'b2' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s2 }}/4</label>
+              <input type="radio" name="my_radio" value="s2" {% if sm2 %}disabled{% endif %} {% if radio_selection == 's2' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">6:30~6:55</th>
+            <td>
+              <label>{{ b3 }}/10</label>
+              <input type="radio" name="my_radio" value="b3" {% if bm3 %}disabled{% endif %} {% if radio_selection == 'b3' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s3 }}/4</label>
+              <input type="radio" name="my_radio" value="s3" {% if sm3 %}disabled{% endif %} {% if radio_selection == 's3' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">7:00~7:25</th>
+            <td>
+              <label>{{ b4 }}/10</label>
+              <input type="radio" name="my_radio" value="b4" {% if bm4 %}disabled{% endif %} {% if radio_selection == 'b4' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s4 }}/4</label>
+              <input type="radio" name="my_radio" value="s4" {% if sm4 %}disabled{% endif %} {% if radio_selection == 's4' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">7:30~7:55</th>
+            <td>
+              <label>{{ b5 }}/10</label>
+              <input type="radio" name="my_radio" value="b5" {% if bm5 %}disabled{% endif %} {% if radio_selection == 'b5' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s5 }}/4</label>
+              <input type="radio" name="my_radio" value="s5" {% if sm5 %}disabled{% endif %} {% if radio_selection == 's5' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">8:00~8:25</th>
+            <td>
+              <label>{{ b6 }}/10</label>
+              <input type="radio" name="my_radio" value="b6" {% if bm6 %}disabled{% endif %} {% if radio_selection == 'b6' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s6 }}/4</label>
+              <input type="radio" name="my_radio" value="s6" {% if sm6 %}disabled{% endif %} {% if radio_selection == 's6' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">8:30~8:55</th>
+            <td>
+              <label>{{ b7 }}/10</label>
+              <input type="radio" name="my_radio" value="b7" {% if bm7 %}disabled{% endif %} {% if radio_selection == 'b7' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s7 }}/4</label>
+              <input type="radio" name="my_radio" value="s7" {% if sm7 %}disabled{% endif %} {% if radio_selection == 's7' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">9:00~9:25</th>
+            <td>
+              <label>{{ b8 }}/10</label>
+              <input type="radio" name="my_radio" value="b8" {% if bm8 %}disabled{% endif %} {% if radio_selection == 'b8' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s8 }}/4</label>
+              <input type="radio" name="my_radio" value="s8" {% if sm8 %}disabled{% endif %} {% if radio_selection == 's8' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">9:30~9:55</th>
+            <td>
+              <label>{{ b9 }}/10</label>
+              <input type="radio" name="my_radio" value="b9" {% if bm9 %}disabled{% endif %} {% if radio_selection == 'b9' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s9 }}/4</label>
+              <input type="radio" name="my_radio" value="s9" {% if sm9 %}disabled{% endif %} {% if radio_selection == 's9' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">10:00~10:25</th>
+            <td>
+              <label>{{ b10 }}/10</label>
+              <input type="radio" name="my_radio" value="b10" {% if bm10 %}disabled{% endif %} {% if radio_selection == 'b10' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s10 }}/4</label>
+              <input type="radio" name="my_radio" value="s10" {% if sm10 %}disabled{% endif %} {% if radio_selection == 's10' %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">10:30~10:55</th>
+            <td>
+              <label>{{ b11 }}/10</label>
+              <input type="radio" name="my_radio" value="b11" {% if bm11 %}disabled{% endif %} {% if radio_selection == 'b11' %}checked{% endif %}>
+            </td>
+            <td>
+              <label>{{ s11 }}/4</label>
+              <input type="radio" name="my_radio" value="s11" {% if sm11 %}disabled{% endif %} {% if radio_selection == 's11' %}checked{% endif %}>
+            </td>
+        </tr>
+      </table>
+      <br>
+    <input type="submit" class="btn btn-outline-primary" value="送信">
+    <a href="{% url 'account:logout' %}" class="btn btn-outline-primary">ログアウト</a>
+  </div>
+</form>
+{% endblock %}
